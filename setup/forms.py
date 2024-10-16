@@ -1,5 +1,5 @@
 from django import forms
-from .models import SelectList
+from .models import SelectList, Category
 
 class SelectListForm(forms.ModelForm):
     type = forms.ChoiceField(label='Type', choices=[])
@@ -20,3 +20,18 @@ class SelectListForm(forms.ModelForm):
         else:
             # If no active list items are available, set a default option
             self.fields['type'].choices = [('', 'No available options')]
+            
+            
+class CategoryForm(forms.ModelForm):
+    class Meta:
+        model = Category
+        fields = '__all__'
+
+    def __init__(self, *args, **kwargs):
+        super(CategoryForm, self).__init__(*args, **kwargs)
+        # Dynamically load page layout choices from SelectList
+        layouts = SelectList.objects.filter(type='LAYOUT', status='active')
+        self.fields['page_layout'] = forms.ChoiceField(
+            choices=[(layout.value, layout.name) for layout in layouts],
+            widget=forms.Select(attrs={'class': 'form-control'})
+        )

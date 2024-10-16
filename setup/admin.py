@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django import forms
-from .models import  Country, State, District, Area, SelectList, Company, Branch, Account
-from .forms import SelectListForm
+from .models import  Country, State, District, Area, SelectList, Company, Branch, Account, Category
+from .forms import SelectListForm, CategoryForm
 
 
 # Register your models here.
@@ -46,6 +46,12 @@ class AccountAdmin(admin.ModelAdmin):
     search_fields = ('name', 'account_number', 'bank_name')
     list_filter = ('active', 'company', 'branch')
     
+class CategoryAdmin(admin.ModelAdmin):
+    form = CategoryForm
+    list_display = ('name', 'slug', 'page_layout', 'status')
+    search_fields = ('name', 'slug')
+    list_filter = ('status',)
+    
 
 admin.site.register(Country, CountryAdmin)
 admin.site.register(State, StateAdmin)
@@ -55,3 +61,4 @@ admin.site.register(SelectList, SelectListAdmin)
 admin.site.register(Company, CompanyAdmin)
 admin.site.register(Branch, BranchAdmin)
 admin.site.register(Account, AccountAdmin)
+admin.site.register(Category, CategoryAdmin)

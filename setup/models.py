@@ -90,12 +90,7 @@ class SelectList(models.Model):
         ('inactive', 'Inactive'),
     ]
 
-    TYPE_CHOICES = [
-        ('text', 'Text'),
-        ('list', 'List'),
-    ]
-
-    type = models.CharField(max_length=100, choices=TYPE_CHOICES, default='list')
+    type = models.CharField(max_length=100)  # No choices here
     name = models.CharField(max_length=255)
     value = models.CharField(max_length=255)
     parent_key = models.CharField(max_length=100, blank=True, null=True)
@@ -104,6 +99,7 @@ class SelectList(models.Model):
 
     def __str__(self):
         return f"{self.name} - {self.type} ({self.status})"
+
 
     class Meta:
         verbose_name = 'SelectList'
@@ -179,14 +175,14 @@ class Account(models.Model):
     
 class Category(models.Model):
     name = models.CharField(max_length=255)
-    slug = models.SlugField(max_length=255, unique=True, blank=True)
+    slug = models.SlugField(max_length=255, blank=True, null=True, unique=True)
     parent_category = models.ForeignKey('self', null=True, blank=True, on_delete=models.SET_NULL, related_name='children')
     order = models.IntegerField(default=0)
     status = models.BooleanField(default=True)
-    page_layout = models.ForeignKey(SelectList, null=True, blank=True, on_delete=models.SET_NULL, limit_choices_to={'type': 'layout'})
+    page_layout = models.CharField(max_length=255, blank=True, null=True)  # No FK here, will load dynamically
     description = models.TextField(blank=True, null=True)
 
-    # SEO fields
+    # SEO details
     seo_title = models.CharField(max_length=255, blank=True, null=True)
     seo_keywords = models.TextField(blank=True, null=True)
     seo_description = models.TextField(blank=True, null=True)
@@ -195,11 +191,13 @@ class Category(models.Model):
     thumbnail = models.ImageField(upload_to='categories/thumbnails/', blank=True, null=True)
     image = models.ImageField(upload_to='categories/images/', blank=True, null=True)
     banner = models.ImageField(upload_to='categories/banners/', blank=True, null=True)
-
+    
     def save(self, *args, **kwargs):
+        # If the slug field is not manually filled, generate it from the name
         if not self.slug:
-            self.slug = slugify(self.name)
-        super(Category, self).save(*args, **kwargs)
+            self.slug = slugify(self.name)  # Sluggify the name if slug is blank
+
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return self.name
