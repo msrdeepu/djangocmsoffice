@@ -12,7 +12,7 @@ class SelectListForm(forms.ModelForm):
         super(SelectListForm, self).__init__(*args, **kwargs)
         
         # Dynamically load choices for the 'type' field where status is 'active' and type is 'list'
-        active_list_items = SelectList.objects.filter(type='list', status='active').order_by('display_order')
+        active_list_items = SelectList.objects.filter(type='LIST', status='active').order_by('display_order')
 
         # If there are items available, populate the 'type' field choices
         if active_list_items.exists():

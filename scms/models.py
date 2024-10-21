@@ -59,7 +59,7 @@ class Page(models.Model):
 
     # === Settings Section ===
     category = models.CharField(max_length=255, choices=[(cat.name, cat.name) for cat in Category.objects.all()])
-    group = models.CharField(max_length=50, choices=[(item.value, item.value) for item in SelectList.objects.filter(type='PAGEGROUP')])
+    group = models.CharField(max_length=50, choices=[(item.value, item.value) for item in SelectList.objects.filter(type='GROUP')])
     page_layout = models.CharField(max_length=50, choices=[(item.value, item.value) for item in SelectList.objects.filter(type='LAYOUT')])
 
     # === Publish Section ===

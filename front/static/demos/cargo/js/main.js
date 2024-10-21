@@ -1,0 +1,9 @@
+/*-----------------------------------------------------------------------------------
+
+    Theme Name: Fabrex - Transport & Logistics HTML Template
+    Description: Transport & Logistics HTML Template
+    Author: Chitrakoot Web
+        
+    ---------------------------------- */    
+
+!function(t){"use strict";var a=t(window);function o(){var e,o;e=t(".full-screen"),o=a.height(),e.css("min-height",o),e=t("header").height(),o=t(".screen-height"),e=a.height()-e,o.css("height",e)}t("#preloader").fadeOut("normall",function(){t(this).remove()}),a.on("scroll",function(){var e=a.scrollTop(),o=t(".navbar-brand.logowhite img");e<=50?(t("header").removeClass("scrollHeader").addClass("fixedHeader"),o.attr("src","img/logos/logo-white.png")):(t("header").removeClass("fixedHeader").addClass("scrollHeader"),o.attr("src","img/logos/logo.png"))}),a.on("scroll",function(){500<t(this).scrollTop()?t(".scroll-to-top").fadeIn(400):t(".scroll-to-top").fadeOut(400)}),t(".scroll-to-top").on("click",function(e){e.preventDefault(),t("html, body").animate({scrollTop:0},600)}),t(".parallax,.bg-img").each(function(e){t(this).attr("data-background")&&t(this).css("background-image","url("+t(this).data("background")+")")}),t(".story-video").magnificPopup({delegate:".video",type:"iframe"}),a.resize(function(e){setTimeout(function(){o()},500),e.preventDefault()}),o(),t(document).ready(function(){t(".testimonial-carousel").owlCarousel({loop:!0,responsiveClass:!0,autoplay:!0,smartSpeed:1500,nav:!1,dots:!0,center:!1,margin:30,responsive:{0:{items:1},768:{items:2},992:{items:3}}}),t(".owl-carousel").owlCarousel({items:1,loop:!0,dots:!1,margin:0,autoplay:!0,smartSpeed:500}),t(".countup").counterUp({delay:25,time:2e3}),t(".current-year").text((new Date).getFullYear())}),a.on("load",function(){t(".portfolio-gallery").lightGallery(),a.stellar()})}(jQuery);

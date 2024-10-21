@@ -25,13 +25,23 @@ class MemberForm(forms.ModelForm):
 
 
 class PageForm(forms.ModelForm):
+    
     class Meta:
         model = Page
         fields = '__all__'  # Include all fields from the model
+        
 
     def __init__(self, *args, **kwargs):
         super(PageForm, self).__init__(*args, **kwargs)
         # Dynamically load choices for page_type from SelectList where type='PAGETYPE'
         self.fields['page_type'].choices = [
             (item.value, item.value) for item in SelectList.objects.filter(type='PAGETYPE')
+        ]
+        
+        self.fields['group'].choices = [
+            (item.value, item.value) for item in SelectList.objects.filter(type='GROUP')
+        ]
+        
+        self.fields['content_access_level'].choices = [
+            (item.value, item.value) for item in SelectList.objects.filter(type='CONTENTACCESS')
         ]

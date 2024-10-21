@@ -4,8 +4,8 @@ from .models import Page
 
 # Register your models here.
 class PageAdmin(admin.ModelAdmin):
-    list_display = ('title', 'slug', 'published_on', 'published', 'page_type', 'link_text')  # Correct this line
-    list_filter = ('published', 'page_type')
+    list_display = ('title', 'slug', 'published_on', 'published', 'page_type', 'link_text', 'group', 'content_access_level') 
+    list_filter = ('published', 'page_type', 'group', 'content_access_level')
     search_fields = ('title', 'slug', 'navigation_text', 'page_title')
 
     fieldsets = (
@@ -19,10 +19,10 @@ class PageAdmin(admin.ModelAdmin):
             'fields': ('cta_header', 'cta_body', 'cta_action_text', 'cta_link_url')
         }),
         ('Attachments', {
-            'fields': ('thumbnail', 'image', 'banner')
+            'fields': ('thumbnail', 'image', 'banner', 'seo_banner', 'attachment1', 'attachment2')
         }),
-        ('Settings', {
-            'fields': ('published_on', 'published', 'expires_on', 'content_access_level')
+        ('Publish Settings', {
+            'fields': ('category','group','page_layout','published_on', 'published', 'expires_on', 'content_access_level')
         }),
     )
     
